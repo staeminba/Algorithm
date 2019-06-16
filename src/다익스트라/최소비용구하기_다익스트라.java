@@ -1,4 +1,4 @@
-package proTest;
+package 다익스트라;
 
 import java.io.BufferedReader;
 import java.io.IOException;
