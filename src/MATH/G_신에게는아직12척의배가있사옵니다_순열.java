@@ -7,7 +7,7 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class 신에게는아직12척의배가있사옵니다 {
+public class G_신에게는아직12척의배가있사옵니다_순열 {
     static double A,B;
     static boolean[] sosu;
     static double result;
