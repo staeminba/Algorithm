@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
  
-public class 축지법_bfs {
+public class B1697_숨바꼭질 {
  
 
 	static int str;

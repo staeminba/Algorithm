@@ -1,4 +1,4 @@
-package 세그먼트트리;
+package TREE;
 
 import java.io.BufferedReader;
 import java.io.IOException;

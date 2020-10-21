@@ -52,10 +52,10 @@ public class 경로찾기_플로이드 {
 	private static void dfs(int x,int y) {
 		// TODO Auto-generated method stub
 		for (int i = 1; i <= N; i++) {
-			if(visit[x][i] || graph[x][i] != 1){
+			if(visit[x][i] == 1 || graph[x][i] != 1){
 				continue;
 			}
-			visit[x][i] = true;
+			visit[x][i] = 1;
 			graph[x][i] = 1;
 			dfs(x,i);
 		}
