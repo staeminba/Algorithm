@@ -1,21 +1,19 @@
-package proTest;
-
+package GRAPH;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 import java.util.StringTokenizer;
- 
-public class ¼û¹Ù²ÀÁú2 {
- 
+
+public class B13549_¼û¹Ù²ÀÁú3_BFS {
 
 	static int str;
 	static int end;
-	static int max = 100001;
-	static int kind = 0;
 	
-	static boolean	visited[];
+	static boolean visited[];
+	static int parent[];
 	
 	static int dx[]={-1,1,2};
 	
@@ -34,12 +32,28 @@ public class ¼û¹Ù²ÀÁú2 {
         
         str = Integer.parseInt(st.nextToken());
         end = Integer.parseInt(st.nextToken());
+       
+        /*
+        if(str >= end){
+            System.out.println(str - end);
+            return;
+        }*/
         
-    	visited	= new boolean[100001];
+    	visited = new boolean[100001];
+    	parent = new int[100001];
     	
-    	bfs(str);
-    	System.out.println(max);
-    	System.out.println(kind);
+    	int result = bfs(str);
+    	
+    	System.out.println(result);
+    	Stack<Integer> stack = new Stack<>();
+    	for (int i = end; i != parent[i]; i = parent[i]) {
+    		stack.push(parent[i]);
+		}
+    	
+    	while(!stack.isEmpty()){
+    		System.out.print(stack.pop() + " ");
+    	}
+    	System.out.print(end);
     	
     	
     }
@@ -48,28 +62,21 @@ public class ¼û¹Ù²ÀÁú2 {
 		Queue<Node> q = new LinkedList<Node>();
 		
 		q.offer(new Node(x,0));
+		
 		visited[x] = true;
+		parent[x] = str;
 		
 		Node temp;
 		
 		while(!q.isEmpty()){
-			
-			int here = q.peek().x;
 			temp = q.poll();
-			int cnt = temp.cnt;
+			
 			int pos = temp.x;
+			int cnt = temp.cnt;
 			
-			visited[pos] = true;
-			
-			
-			if(here == end){
-				if(cnt <= max){
-					max = cnt;
-					kind++;
-				}else 
-					break;
+			if(pos == end){
+				return cnt;
 			}
-			
 			
 			for (int i = 0; i < 3; i++) {
 				int nx;
@@ -80,10 +87,12 @@ public class ¼û¹Ù²ÀÁú2 {
 					nx = pos*2;
 				}
 				
-				if(nx <= 0 || nx > 100000 || visited[nx])
+				if(nx < 0 || nx > 100000 || visited[nx])
 					continue;
-				
+
 				q.offer(new Node(nx,cnt+1));
+				visited[nx] = true;
+				parent[nx] = pos;
 			}
 		}
 		return 0;

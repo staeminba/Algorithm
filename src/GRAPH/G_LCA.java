@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class LCA {
+public class G_LCA {
 	
 	static int N;
 	static int[] dep,visit;

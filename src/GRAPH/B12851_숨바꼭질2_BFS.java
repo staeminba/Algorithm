@@ -1,19 +1,23 @@
 package GRAPH;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
- 
-public class B1697_¼û¹Ù²ÀÁú {
- 
+
+public class B12851_¼û¹Ù²ÀÁú2_BFS {
+
 
 	static int str;
 	static int end;
+	static int max = 100002;
+	static int kind = 0;
 	
-	static boolean visited[];
+	static boolean	visited[];
+	static int		val[];
 	
 	static int dx[]={-1,1,2};
 	
@@ -32,16 +36,13 @@ public class B1697_¼û¹Ù²ÀÁú {
         
         str = Integer.parseInt(st.nextToken());
         end = Integer.parseInt(st.nextToken());
-       
-        /*
-        if(str >= end){
-            System.out.println(str - end);
-            return;
-        }*/
         
-    	visited = new boolean[100001];
+    	visited	= new boolean[100001];
+    	val		= new int[100001];
     	
-    	System.out.println(bfs(str));
+    	int min = bfs(str);
+    	System.out.println(max);
+    	System.out.println(kind);
     	
     	
     }
@@ -50,20 +51,28 @@ public class B1697_¼û¹Ù²ÀÁú {
 		Queue<Node> q = new LinkedList<Node>();
 		
 		q.offer(new Node(x,0));
-		
 		visited[x] = true;
 		
 		Node temp;
 		
 		while(!q.isEmpty()){
-			temp = q.poll();
 			
+			int here = q.peek().x;
+			temp = q.poll();
 			int cnt = temp.cnt;
 			int pos = temp.x;
 			
-			if(pos == end){
-				return cnt;
+			visited[pos] = true;
+			
+			
+			if(here == end){
+				if(cnt <= max){
+					max = cnt;
+					kind++;
+				}else 
+					break;
 			}
+			
 			
 			for (int i = 0; i < 3; i++) {
 				int nx;
@@ -76,9 +85,8 @@ public class B1697_¼û¹Ù²ÀÁú {
 				
 				if(nx < 0 || nx > 100000 || visited[nx])
 					continue;
-
+				
 				q.offer(new Node(nx,cnt+1));
-				visited[nx] = true;
 			}
 		}
 		return 0;

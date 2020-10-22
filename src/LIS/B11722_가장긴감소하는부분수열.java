@@ -3,11 +3,10 @@ package LIS;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Arrays;
 import java.util.StringTokenizer;
  
-public class 가장긴감소하는부분수열_dp_11722 {
+public class B11722_가장긴감소하는부분수열 {
  
 
 	static int N;
@@ -17,9 +16,6 @@ public class 가장긴감소하는부분수열_dp_11722 {
 	static int[] arr;
 	
     public static void main(String[] args) throws IOException {
-    	char a = '6';
-    	char b = '4';
-    	System.out.println("a : " + a + " (a+b-'0') : " + (a-'0'+b-'0') + "(a+b-0) : " + (a+b-0));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
         

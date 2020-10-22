@@ -7,44 +7,38 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
  
-public class 가장긴증가하는부분수열_dp_11053 {
+public class B12015_가장긴증가하는부분수열2 {
  
 
 	static int N;
-	static int max;
-	static int ans = 0;
-	static int[] dp;
+	static int ans = 1;
 	static int[] arr;
+	static int left,right;
 	
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
         
-        dp  = new int[N+1];
         arr = new int[N+1];
+        left = 0; right = -1;
         
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 1; i <= N; i++) {
-        	arr[i] = Integer.parseInt(st.nextToken());
+        	int num = Integer.parseInt(st.nextToken());
+        	int l = 0; int r = right;
+        	int mid;
+        	while(l <= r){
+        		mid = (l+r) >> 1;
+        		if(arr[mid] >= num)
+        			r = mid -1;
+        		else
+        			l = mid + 1;
+        	}
+        	if(r+1 > right)
+        		right = r+1;
+        	arr[r+1] = num;
 		}
+        System.out.println(right+1);
         
-        System.out.println(add());
     }
-    public static int add(){
-    	for (int i = 1; i <= N; i++) {
-    		max = 0;
-    		for (int j = 1; j < i; j++) {
-				if(arr[i] > arr[j]){
-					if(dp[j] > max)
-						max += 1;
-				}
-			}
-    		dp[i] = max + 1;
-    		if(dp[i] > ans){
-    			ans = dp[i];
-    		}
-		}
-    	return ans;
-    }
-	
 }
