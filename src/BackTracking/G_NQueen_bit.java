@@ -8,7 +8,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class G_NQueen {
+public class G_NQueen_bit {
 	
 	static int N;
 	static int result;
@@ -28,8 +28,6 @@ public class G_NQueen {
 	}
 	private static void go(int num,int ld, int rd) {
 		// TODO Auto-generated method stub
-		System.out.println(num+","+ld+","+rd);
-		System.out.println(2& ( 1<<1));
 		if(num == N){
 			result++;
 			return;
@@ -37,7 +35,6 @@ public class G_NQueen {
 		for (int i = 0; i < N; i++) {
 			if((chk & (1 <<i)) != 0 || (ld & (1<<i)) != 0 || (rd & (1<<i)) != 0)
 				continue;
-			System.out.println("i : " + i);
 			chk |= (1 << i);
 			go(num + 1, (ld | (1 << i)) << 1, (rd | (1 << i)) >> 1);
 			chk &= ~(1 << i);

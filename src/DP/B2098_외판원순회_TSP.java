@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class 외판원순회 {
+public class B2098_외판원순회_TSP {
 	
 	static int n;
 	static int map[][];

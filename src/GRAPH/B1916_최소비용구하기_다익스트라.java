@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
-public class 최소비용구하기_다익스트라 {
+public class B1916_최소비용구하기_다익스트라 {
 
 	static int T;
 	static int x;

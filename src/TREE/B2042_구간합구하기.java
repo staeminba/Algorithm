@@ -9,86 +9,116 @@ import java.util.StringTokenizer;
 public class B2042_구간합구하기 {
  
 
-	static int arr[];
+	static int N,M,K;
 	static long tree[];
+	static int arr[];
+	static int leaf;
+	
 	public static void main(String[] args) throws IOException {
-		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer token = new StringTokenizer(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		int N = Integer.parseInt(token.nextToken());
-		int M = Integer.parseInt(token.nextToken());
-		int K = Integer.parseInt(token.nextToken());
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		K = Integer.parseInt(st.nextToken());
 		
-		ArrayList<Long> list = new ArrayList<>();
-		
-		arr = new int[1000000];
-		tree = new long[3000000];
-		
-		for(int i = 0; i<N; i++){
-			token = new StringTokenizer(br.readLine());
-			arr[i] = Integer.parseInt(token.nextToken()); 
+		arr = new int[N+1];
+		leaf = 1 << (int) Math.ceil(Math.log10(N)/Math.log10(2));
+		tree = new long[leaf<<1];
+		for (int i = 1; i <= N; i++) {
+			arr[i] = Integer.parseInt(br.readLine());
 		}
 		
-		init(0,N-1,1);
-		
-		for(int i = 0; i<M+K; i++){
-			token = new StringTokenizer(br.readLine());
-			int a = Integer.parseInt(token.nextToken());
-			int b = Integer.parseInt(token.nextToken());
-			int c = Integer.parseInt(token.nextToken());
-			
+		init();
+		for(int i = 1; i <= M+K; i++){
+			st = new StringTokenizer(br.readLine());
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
+			int c = Integer.parseInt(st.nextToken());
 			if(a == 1){
-				long temp = c-arr[b-1];
-				arr[b-1] = c;
-				update(0,N-1,1,b-1,temp);
-			}
-			
-			if(a == 2){
-				list.add((sum(0,N-1,1,b-1,c-1)));
+				update(b,c);
+			}else{
+				System.out.println(sum(b, c));
 			}
 		}
 		
-		for(int i = 0; i<list.size(); i++){
-			System.out.println(list.get(i));
-		}
+	}
+
+	public static void init() {
+		// TODO Auto-generated method stub
+		for (int i = leaf; i < leaf+N; i++) 
+			tree[i] = arr[i - leaf + 1];
+		for (int i = leaf-1; i > 0; i--) 
+			tree[i] = tree[i * 2] + tree[(i*2) + 1];
+	}
+
+	public static void update(int idx,int val){
+		/*idx += leaf-1;
+		tree[idx] = val;
+		int dif = (int) (val - tree[idx]);
+		while(idx >= 1){
+			idx >>= 1;
+			tree[idx] += dif;
+		}*/
+		idx += (leaf-1);
+		long diff =  val - tree[idx];
+        tree[idx] = val;  // 말단
+        while (idx >= 2) {
+            idx >>= 1;
+            tree[idx] += diff;
+        }
+		
 	}
 	
-	public static long init(int start, int end, int node){
+	public static long sum(int left,int right){
+		long sum = 0;
+		left  += (leaf-1);
+		right += (leaf-1);
+		while(left <= right){
+			if((left&1) != 0 )
+				sum += tree[left++];
+			if((right & 1) == 0)
+				sum += tree[right--];
+			left >>= 1;
+			right >>= 1;
+		}
+		if(left == right)
+			sum += tree[left];
 		
-		if(start == end){
+		return sum;
+	}
+	
+	/*public static long init(int start,int end,int node){
+		if(start == end)
 			return tree[node] = arr[start];
-		}
 		
-		int mid = (start + end) / 2;
+		int mid = (start+end)/2;
 		
-		return tree[node] = init(start, mid, node * 2) + init(mid+1, end, node * 2+1);
+		return tree[node] = init(start,mid,node*2) + init(mid+1,end,node*2+1);
 	}
 	
-	public static long sum(int start, int end, int node, int left, int right){
+	public static void update(int start,int end,int node,int index,int dif){
+		if(index < start || end < index)
+			return;
+		tree[node] += dif;
 		
-		if(left > end || right < start){
+		if(start == end)
+			return;
+		
+		int mid = (start+end)/2;
+		update(start,mid,node*2,index,dif);
+		update(mid+1,end,node*2+1,index,dif);
+	}
+	
+	public static long sum(int start,int end,int node,int left,int right){
+		if(right < start || end < left)
 			return 0;
-		}
 		if(left <= start && end <= right){
 			return tree[node];
 		}
-		
 		int mid = (start+end)/2;
+		return sum(start,mid,node*2,left,right)+sum(mid+1,end,node*2+1,left,right);
 		
-		return sum(start, mid, node*2, left, right)+sum(mid+1, end, node*2+1, left, right);
 	}
-	
-	public static void update(int start, int end, int node, int index, long dif){
-		if(index < start || index > end)return;
-		
-		tree[node] += dif;
-		
-		if(start == end)return;
-		
-		int mid = (start+end)/2;
-		
-		update(start, mid, node*2, index, dif);
-		update(mid+1, end, node*2+1, index, dif);
-	}
+	*/
 }
